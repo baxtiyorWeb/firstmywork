@@ -1,27 +1,40 @@
 let leftSlide = document.querySelector('.leftSlide')
 let rightSlide = document.querySelector('.rightSlide')
 let images = document.querySelector('.images')
-let img = document.querySelectorAll('.img')
-let imgs = document.querySelector('img')
+let carouselImage = document.querySelector('.carouselImage')
+
+
+// let img = document.querySelectorAll('.img')
 let input = document.querySelectorAll('.btnSlider input')
+let imgs = document.querySelectorAll('.images img')
 
 
 let index = 0
 function carousel() {
-        img.forEach(item=>{
-            item.style.transform = `translate(${index*700}px)`
-            
-        })
-        input.forEach(i=>{
-            i.style.backgroundColor = 'green'
-        })
+    if (index > imgs.length - 1) {
+        index = 0
+    } else if (index < 0) {
+        index = imgs.length - 1
+    }
+    images.style.transform = `translateX(${-index * 700}px)`
 }
-
-leftSlide.addEventListener('click', function () {
+let time = setTimeout(run, 1000)
+function run() {
+    index += 1;
     carousel()
-    index++;
+
+}
+function resetInterval() {
+    clearInterval(time)
+    time = setTimeout(run, 2000)
+}
+leftSlide.addEventListener('click', function () {
+    index--;
+    carousel()
+    resetInterval()
 })
 rightSlide.addEventListener('click', function () {
+    index++;
     carousel()
-    index--;
+    resetInterval()
 })
